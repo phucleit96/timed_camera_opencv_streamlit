@@ -18,7 +18,7 @@ if start:
     streamlit_image = st.empty()
 
     # Start the camera
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(-1)
 
     if not camera.isOpened():
         st.write("Could not open camera")

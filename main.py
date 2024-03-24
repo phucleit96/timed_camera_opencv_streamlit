@@ -2,19 +2,20 @@
 import cv2
 import streamlit as st
 from datetime import datetime
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, RTCConfiguration
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
 
 # Set the title of the Streamlit app
 st.title('Motion Detector')
 
-# Create a text input field for the user to enter their location
+# Create a text input field for the user to enter location
 location = st.text_input("Location (not required): ")
 
 # Create a button that starts the camera when clicked
 start = st.button('Start Camera')
 
-class VideoTransformer(VideoTransformerBase):
-    def transform(self, frame):
+
+class VideoProcessor(VideoProcessorBase):
+    def recv(self, frame):
         # Get the current date and time
         now = datetime.now()
 
@@ -36,6 +37,7 @@ class VideoTransformer(VideoTransformerBase):
 
         return img
 
+
 # Check if the start button has been clicked
 if start:
-    webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+    webrtc_streamer(key="example", video_processor_factory=VideoProcessor)
